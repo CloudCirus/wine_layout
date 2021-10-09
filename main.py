@@ -22,8 +22,7 @@ def get_format_data_from_xlsx(file_name: str, columns: list) -> defaultdict:
     for elem in wines_by_category:
         for el in wines_by_category[elem]:
             del el['Категория']
-    sorted_tuple = sorted(wines_by_category.items(), key=lambda x: x[0])
-    wines_by_category = dict(sorted_tuple)
+    wines_by_category = dict(sorted(wines_by_category.items(), key=lambda x: x[0]))
     return wines_by_category
 
 
