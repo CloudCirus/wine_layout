@@ -19,10 +19,8 @@ def get_format_data_from_xlsx(file_name: str, columns: list) -> defaultdict:
     wines_by_category = defaultdict(list)
     for elem in wines:
         wines_by_category[elem.pop('Категория')].append(elem)
-    # for elem in wines_by_category:
-    #     for el in wines_by_category[elem]:
-    #         del el['Категория']
-    wines_by_category = dict(sorted(wines_by_category.items(), key=lambda x: x[0]))
+    wines_by_category = dict(
+        sorted(wines_by_category.items(), key=lambda x: x[0]))
     return wines_by_category
 
 
