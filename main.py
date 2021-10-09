@@ -49,7 +49,6 @@ def main() -> None:
         file.write(rendered_page)
 
     server = HTTPServer(('127.0.0.1', 8000), SimpleHTTPRequestHandler)
-    print('start ...')
     server.serve_forever()
 
 
