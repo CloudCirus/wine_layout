@@ -1,8 +1,9 @@
+import datetime
+from collections import defaultdict
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pandas import read_excel
-from collections import defaultdict
-import datetime
 
 
 def count_company_age(foundation_year: int) -> int:
