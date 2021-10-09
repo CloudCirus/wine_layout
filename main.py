@@ -6,10 +6,10 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pandas import read_excel
 
 
-def count_company_age(foundation_year: int) -> int:
-    foundation_year = datetime.date(foundation_year, 1, 1).year
+def count_company_age() -> int:
+    FOUNDATION_YEAR = 1920
     now_year = datetime.datetime.now().year
-    return now_year - foundation_year
+    return now_year - FOUNDATION_YEAR
 
 
 def get_format_data_from_xlsx(file_name: str, columns: list) -> defaultdict:
@@ -45,7 +45,7 @@ def main() -> None:
     template = env.get_template('template.html')
 
     rendered_page = template.render(
-        age=count_company_age(1920),
+        age=count_company_age(),
         data=data
     )
     with open('index.html', 'w', encoding="utf8") as file:
