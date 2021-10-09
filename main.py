@@ -1,4 +1,5 @@
 import datetime
+import logging
 from collections import defaultdict
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
@@ -6,17 +7,23 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pandas import read_excel
 
 
+logging.basicConfig(filename='sample.log', level=logging.INFO)
+log = logging.getLogger('main')
+
+
 def count_company_age() -> int:
     FOUNDATION_YEAR = 1920
     now_year = datetime.datetime.now().year
-    
+
     return now_year - FOUNDATION_YEAR
 
 
 def get_format_data_from_xlsx(file_name: str, columns: list) -> defaultdict:
-    wines = read_excel(file_name, usecols=columns,
-                       keep_default_na=False).to_dict(orient='record')
-
+    try:
+        wines = read_excel(file_name, usecols=columns,
+                           keep_default_na=False).to_dict(orient='record')
+    except TypeError and UnboundLocalError and FileNotFoundError as ex:
+        log.exception('Reading xls file problem\n')
     wines_by_category = defaultdict(list)
     for elem in wines:
         wines_by_category[elem.pop('Категория')].append(elem)
@@ -36,7 +43,7 @@ def main() -> None:
         'Картинка',
         'Акция'
     ]
-    wines_by_category = get_format_data_from_xlsx('wine3.xlsx', columns)
+    wines_by_category = get_format_data_from_xlsx('wine.xlsx', columns)
 
     env = Environment(
         loader=FileSystemLoader('.'),
