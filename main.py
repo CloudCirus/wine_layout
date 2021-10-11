@@ -1,11 +1,13 @@
 import argparse
 import datetime
 import logging
+import os
 from collections import defaultdict
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pandas import read_excel
+from dotenv import load_dotenv
 
 
 def count_company_age() -> int:
@@ -32,13 +34,23 @@ def get_format_data_from_xlsx(file_name: str, columns: list, logging: logging) -
 
 
 def main() -> None:
+    load_dotenv()
+    xls_path = os.getenv('XLS_PATH')
+    template_path = os.getenv('TEMLPATE_PATH')
+    host = os.getenv('HOST')
+    port = os.getenv('PORT')
+
     parser = argparse.ArgumentParser(
-        description='display data from xlsx on web-layout'
+        description='display wines from xlsx on web-layout'
     )
-    parser.add_argument('--file_path', default='wine.xlsx',
+    parser.add_argument('--file_path', default=xls_path,
                         help='path to xlsx file', type=str)
-    parser.add_argument('--template_path', default='template.html',
+    parser.add_argument('--template_path', default=template_path,
                         help='path to template fo rendering', type=str)
+    parser.add_argument('--host', default=host,
+                        help='server host', type=str)
+    parser.add_argument('--port', default=port,
+                        help='server port', type=int)
     args = parser.parse_args()
 
     logging.basicConfig(filename='sample.log', level=logging.INFO)
@@ -69,7 +81,7 @@ def main() -> None:
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
 
-    server = HTTPServer(('127.0.0.1', 8000), SimpleHTTPRequestHandler)
+    server = HTTPServer((args.host, args.port), SimpleHTTPRequestHandler)
     server.serve_forever()
 
 
