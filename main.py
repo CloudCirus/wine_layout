@@ -37,7 +37,7 @@ def main() -> None:
     )
     parser.add_argument('--file_path', default='wine.xlsx',
                         help='path to xlsx file', type=str)
-    parser.add_argument('--template_path', default='template.thml',
+    parser.add_argument('--template_path', default='template.html',
                         help='path to template fo rendering', type=str)
     args = parser.parse_args()
 
@@ -63,7 +63,7 @@ def main() -> None:
     template = env.get_template(args.template_path)
     rendered_page = template.render(
         company_age=count_company_age(),
-        wines=wines_by_category,
+        wines_by_category=wines_by_category.items(),
     )
 
     with open('index.html', 'w', encoding="utf8") as file:
