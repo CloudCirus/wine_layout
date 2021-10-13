@@ -23,8 +23,8 @@ def get_format_data_from_xlsx(file_name: str, columns: list, logging: logging) -
     except TypeError and UnboundLocalError and FileNotFoundError as ex:
         logging.exception('Reading xls file problem\n')
     wines_by_category = defaultdict(list)
-    for elem in wines:
-        wines_by_category[elem.pop('Категория')].append(elem)
+    for wine in wines:
+        wines_by_category[wine.pop('Категория')].append(wine)
 
     wines_by_category = dict(
         sorted(wines_by_category.items(), key=lambda x: x[0]))
