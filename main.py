@@ -16,7 +16,7 @@ def count_company_age() -> int:
     return now_year - foundation_year
 
 
-def get_format_data_from_xlsx(file_name: str, columns: list, logging: logging) -> defaultdict:
+def get_wines_from_xlsx(file_name: str, columns: list, logging: logging) -> defaultdict:
     try:
         wines = read_excel(file_name, usecols=columns,
                            keep_default_na=False).to_dict(orient='records')
@@ -26,10 +26,10 @@ def get_format_data_from_xlsx(file_name: str, columns: list, logging: logging) -
     for wine in wines:
         wines_by_category[wine.pop('Категория')].append(wine)
 
-    wines_by_category = dict(
+    sorted_wines_by_category = dict(
         sorted(wines_by_category.items(), key=lambda x: x[0]))
         
-    return wines_by_category
+    return sorted_wines_by_category
 
 
 def main() -> None:
@@ -63,7 +63,7 @@ def main() -> None:
         'Картинка',
         'Акция'
     ]
-    wines_by_category = get_format_data_from_xlsx(
+    sorted_wines_by_category = get_wines_from_xlsx(
         args.file_path, columns, logging=log)
 
     env = Environment(
@@ -74,7 +74,7 @@ def main() -> None:
     template = env.get_template(args.template_path)
     rendered_page = template.render(
         company_age=count_company_age(),
-        wines_by_category=wines_by_category.items(),
+        wines_by_category=sorted_wines_by_category.items(),
     )
 
     with open('index.html', 'w', encoding="utf8") as file:
