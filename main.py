@@ -11,10 +11,9 @@ from pandas import read_excel
 
 
 def count_company_age() -> int:
-    FOUNDATION_YEAR = 1920
+    foundation_year = 1920
     now_year = datetime.datetime.now().year
-
-    return now_year - FOUNDATION_YEAR
+    return now_year - foundation_year
 
 
 def get_format_data_from_xlsx(file_name: str, columns: list, logging: logging) -> defaultdict:
@@ -29,7 +28,7 @@ def get_format_data_from_xlsx(file_name: str, columns: list, logging: logging) -
 
     wines_by_category = dict(
         sorted(wines_by_category.items(), key=lambda x: x[0]))
-
+        
     return wines_by_category
 
 
