@@ -152,22 +152,22 @@
                           position: absolute;
                           right: -20px;
                           top: -20px;" />
-                        {% else %}
+                      {% else %}
                         <img src="images/{{ wine.Картинка }}" alt="Image"
                           class="img-fluid" />
-                        {% endif %}
-                        <div>
-                          <h3 class="heading mt-3 mb-3 text-dark">
-                            {{ wine.Название }}
-                          </h3>
-                          <p>
-                            {% if wine.Сорт %}
-                            Сорт винограда - {{ wine.Сорт }}
-                            {%endif%}
-                            <br />
-                            <span class="price">{{ wine.Цена }}р.</span>
-                          </p>
-                        </div>
+                      {% endif %}
+                      <div>
+                        <h3 class="heading mt-3 mb-3 text-dark">
+                          {{ wine.Название }}
+                        </h3>
+                        <p>
+                          {% if wine.Сорт %}
+                          Сорт винограда - {{ wine.Сорт }}
+                          {%endif%}
+                          <br />
+                          <span class="price">{{ wine.Цена }}р.</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 {% endfor %}
